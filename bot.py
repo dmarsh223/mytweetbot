@@ -21,18 +21,27 @@ current_weather = ("Current temperature in %s is: %s" % (location, temp_f))
 print (current_weather)
 f.close()
 
-
 #checks for weather alerts
 alert = urlopen(WUNDERGROUND_ALERTS)
 alert_string = alert.read()
 parsed_alert_json = json.loads(alert_string)
-alert_type = parsed_alert_json['alerts'][0]['type']
-alert_description = parsed_alert_json['alerts'][0]['description'] #needs to check for number of alerts and iterate until none
-current_alert = ("The current alert type is %s and the description is %s" % (alert_type, alert_description))
-print(current_alert)
-alert.close
+try:
+    alert_type = parsed_alert_json['alerts'][0]['type']
+    alert_description = parsed_alert_json['alerts'][0]['description'] #needs to check for number of alerts and iterate until none
+    current_alert = ("The current alert type is %s and the description is %s" % (alert_type, alert_description))
+    print(current_alert)
 
-#update status test
+   #sample for loop to iterate through different alerts
+    for item in parsed_alert_json["alerts"]:
+        print (item ["type"])
+    alert.close
+except:
+    print("There are no active alerts")
+    alert.close
+
+
+
+    #update status test
 # status = current_weather
 # api.update_status(status=status)
 
