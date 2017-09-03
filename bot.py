@@ -26,10 +26,7 @@ alert = urlopen(WUNDERGROUND_ALERTS)
 alert_string = alert.read()
 parsed_alert_json = json.loads(alert_string)
 
-#this test shows that the number in the middle brackets corresponds to the alerts
-#so if there is more than 1 alert, this mumber can be used to iterate through them
-iterationtest = parsed_alert_json['alerts'][1]['type']
-print ("This is looking for the third alert, which has the type of %s" % (iterationtest))
+
 
 #this obtains the number of active weather alerts and stores is in number_of_alerts
 item_dict = json.loads(alert_string)
@@ -38,11 +35,22 @@ print ('The number of active weather alerts is %s' % (number_of_alerts))
 
 
 
+#iterates through alert descriptions and stores in list
+alert_description_list = []
+for i in range(number_of_alerts):
+    alert_description_list.append(parsed_alert_json['alerts'][i]['description'])
+#print test for alert descriptions
+print ("This is the alert description test string. description is %s" % (alert_description_list[0]))
 
 
+#---------------------------------------------------------------------------------------
+#anything under this line is test code
 
 
-
+#this test shows that the number in the middle brackets corresponds to the alerts
+#so if there is more than 1 alert, this mumber can be used to iterate through them
+# iterationtest = parsed_alert_json['alerts'][1]['type']
+# print ("This is looking for the third alert, which has the type of %s" % (iterationtest))
 
 #try not needed - block above can check for number of active alerts.
 # try:
