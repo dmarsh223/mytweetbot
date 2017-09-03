@@ -42,6 +42,12 @@ for i in range(number_of_alerts):
 #print test for alert descriptions
 print ("This is the alert description test string. description is %s" % (alert_description_list[0]))
 
+#read in last 20 tweets
+print (api.user_timeline())
+mostrecenttweet = api.user_timeline()[1] #need to remove argument once there are 20 tweets in the account
+print (mostrecenttweet.text)
+
+#posts alert to twitter - if there are any active alerts
 
 #---------------------------------------------------------------------------------------
 #anything under this line is test code
