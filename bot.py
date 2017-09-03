@@ -19,7 +19,6 @@ location = parsed_json['location']['city']
 temp_f = parsed_json['current_observation']['temp_f']
 current_weather = ("Current temperature in %s is: %s" % (location, temp_f))
 print (current_weather)
-f.close()
 
 #checks for weather alerts
 alert = urlopen(WUNDERGROUND_ALERTS)
@@ -40,12 +39,25 @@ alert_description_list = []
 for i in range(number_of_alerts):
     alert_description_list.append(parsed_alert_json['alerts'][i]['description'])
 #print test for alert descriptions
-print ("This is the alert description test string. description is %s" % (alert_description_list[0]))
+current_weather_update = ("This is the alert description test string. description is %s" % (alert_description_list[0]))
+print (current_weather_update)
 
-#read in last 20 tweets
-print (api.user_timeline())
-mostrecenttweet = api.user_timeline()[1] #need to remove argument once there are 20 tweets in the account
-print (mostrecenttweet.text)
+test_compare = ("test tweet 12")
+
+#read in last 20 tweets and compare to a string to see if tweet has been posted already
+for i in range (20):
+    mostrecenttweet = api.user_timeline()[i]
+    current_tweet_to_compare = (mostrecenttweet.text)
+    print (current_tweet_to_compare)
+    if current_tweet_to_compare == test_compare:
+        print ("there is no new weather update")
+
+
+
+
+#close url
+f.close()
+
 
 #posts alert to twitter - if there are any active alerts
 
