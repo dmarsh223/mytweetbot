@@ -11,15 +11,6 @@ auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
 api = tweepy.API(auth)
 
 
-#gets weather from wunderground - under construction
-f = urlopen(WUNDERGROUND_WEATHER)
-json_string = f.read()
-parsed_json = json.loads(json_string)
-location = parsed_json['location']['city']
-temp_f = parsed_json['current_observation']['temp_f']
-current_weather = ("Current temperature in %s is: %s" % (location, temp_f))
-print (current_weather)
-
 #checks for weather alerts
 alert = urlopen(WUNDERGROUND_ALERTS)
 alert_string = alert.read()
@@ -31,18 +22,20 @@ item_dict = json.loads(alert_string)
 number_of_alerts = len(item_dict['alerts'])
 print ('The number of active weather alerts is %s' % (number_of_alerts))
 
+
 #if there are no alerts - the program exits
 if number_of_alerts == 0:
     print ("There are no active alerts - exiting script now")
     exit()
 
 
-#iterates through alert descriptions and stores in list
+#iterates through alert descriptions and end times and stores in list
 alert_description_list = []
 alert_end_time = []
 for i in range(number_of_alerts):
     alert_description_list.append(parsed_alert_json['alerts'][i]['description'])
     alert_end_time.append(parsed_alert_json['alerts'][i]['date'])
+
 
 #this is the status update that will be compared to previous tweets and eventually tweeted
 status_update = ("%s for Stafford Township expiring %s" % (alert_description_list[0], alert_end_time[0]))
@@ -62,7 +55,7 @@ for i in range (20):
     current_tweet_to_compare = (mostrecenttweet.text)
     #if the proposed new status equals any of the previous tweets - exit program
     if current_tweet_to_compare == status_update: #compares last tweets to current tweet to send out
-        print ("there is no new weather update...exiting program")
+        print ("This update was already sent out...exiting script")
         exit()
 
 #update status
@@ -111,3 +104,13 @@ f.close()
 # public_tweets = api.home_timeline()
 # for tweet in public_tweets:
 #     print(tweet.text)
+
+
+# #gets weather from wunderground - under construction
+# f = urlopen(WUNDERGROUND_WEATHER)
+# json_string = f.read()
+# parsed_json = json.loads(json_string)
+# location = parsed_json['location']['city']
+# temp_f = parsed_json['current_observation']['temp_f']
+# current_weather = ("Current temperature in %s is: %s" % (location, temp_f))
+# print (current_weather)
