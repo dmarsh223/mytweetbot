@@ -26,33 +26,47 @@ alert_string = alert.read()
 parsed_alert_json = json.loads(alert_string)
 
 
-
 #this obtains the number of active weather alerts and stores is in number_of_alerts
 item_dict = json.loads(alert_string)
 number_of_alerts = len(item_dict['alerts'])
 print ('The number of active weather alerts is %s' % (number_of_alerts))
 
+#if there are no alerts - the program exits
+if number_of_alerts == 0:
+    print ("There are no active alerts - exiting script now")
+    exit()
 
 
 #iterates through alert descriptions and stores in list
 alert_description_list = []
+alert_end_time = []
 for i in range(number_of_alerts):
     alert_description_list.append(parsed_alert_json['alerts'][i]['description'])
-#print test for alert descriptions
-current_weather_update = ("This is the alert description test string. description is %s" % (alert_description_list[0]))
-print (current_weather_update)
+    alert_end_time.append(parsed_alert_json['alerts'][i]['date'])
 
-test_compare = ("test tweet 12")
+#this is the status update that will be compared to previous tweets and eventually tweeted
+status_update = ("%s for Stafford Township expiring %s" % (alert_description_list[0], alert_end_time[0]))
+
+
+#accounting for multiple alerts - this is in progress
+# if number_of_alerts == 1:
+#     status_update = ("%s for Stafford Township expiring %s" % (alert_description_list[0], alert_end_time[0]))
+# elif number_of_alerts == 2:
+#     status_update = ("%s for Stafford Township expiring %s" % (alert_description_list[0], alert_end_time[0]))
+# print (status_update)
+
 
 #read in last 20 tweets and compare to a string to see if tweet has been posted already
 for i in range (20):
     mostrecenttweet = api.user_timeline()[i]
     current_tweet_to_compare = (mostrecenttweet.text)
-    print (current_tweet_to_compare)
-    if current_tweet_to_compare == test_compare:
-        print ("there is no new weather update")
+    #if the proposed new status equals any of the previous tweets - exit program
+    if current_tweet_to_compare == status_update: #compares last tweets to current tweet to send out
+        print ("there is no new weather update...exiting program")
+        exit()
 
-
+#update status
+api.update_status(status=status_update)
 
 
 #close url
