@@ -1,6 +1,7 @@
 import tweepy
 import json
 from urllib.request import urlopen
+from datetime import datetime
 
 from secrets import *
 
@@ -22,10 +23,15 @@ item_dict = json.loads(alert_string)
 number_of_alerts = len(item_dict['alerts'])
 print ('The number of active weather alerts is %s' % (number_of_alerts))
 
+# set variable for date and time for logs
+currentdatetime = datetime.now()
 
 # if there are no alerts - the program exits
 if number_of_alerts == 0:
-    print ("There are no active alerts - exiting script now")
+    f = open('weatherlogs.txt','a')
+    f.write('\n%s - there are no active alerts' % (currentdatetime) )
+    f.close()
+    print("There are no active alerts - exiting script now")
     exit()
 
 
@@ -55,11 +61,17 @@ for i in range (20):
     current_tweet_to_compare = (mostrecenttweet.text)
     # if the proposed new status equals any of the previous tweets - exit program
     if current_tweet_to_compare == status_update: # compares last tweets to current tweet to send out
+        f = open('weatherlogs.txt', 'a')
+        f.write('\n%s - duplicate alert found - no tweet sent out' % (currentdatetime))
+        f.close()
         print ("This update was already sent out...exiting script")
         exit()
 
 # update status
 api.update_status(status=status_update)
+f = open('weatherlogs.txt', 'a')
+f.write('\n%s - twitter status updated to %s' % (currentdatetime, status_update))
+f.close()
 print ("Twitter status updated...exiting script")
 alert.close
 exit()
