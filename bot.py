@@ -23,13 +23,13 @@ number_of_alerts = len(item_dict['alerts'])
 print ('The number of active weather alerts is %s' % (number_of_alerts))
 
 
-#if there are no alerts - the program exits
+# if there are no alerts - the program exits
 if number_of_alerts == 0:
     print ("There are no active alerts - exiting script now")
     exit()
 
 
-#iterates through alert descriptions and end times and stores in list
+# iterates through alert descriptions and end times and stores in list
 alert_description_list = []
 alert_end_time = []
 for i in range(number_of_alerts):
@@ -37,11 +37,11 @@ for i in range(number_of_alerts):
     alert_end_time.append(parsed_alert_json['alerts'][i]['date'])
 
 
-#this is the status update that will be compared to previous tweets and eventually tweeted
+# this is the status update that will be compared to previous tweets and eventually tweeted
 status_update = ("%s for Stafford Township expiring %s" % (alert_description_list[0], alert_end_time[0]))
 
 
-#accounting for multiple alerts - this is in progress
+# accounting for multiple alerts - this is in progress
 # if number_of_alerts == 1:
 #     status_update = ("%s for Stafford Township expiring %s" % (alert_description_list[0], alert_end_time[0]))
 # elif number_of_alerts == 2:
@@ -49,35 +49,33 @@ status_update = ("%s for Stafford Township expiring %s" % (alert_description_lis
 # print (status_update)
 
 
-#read in last 20 tweets and compare to a string to see if tweet has been posted already
+# read in last 20 tweets and compare to a string to see if tweet has been posted already
 for i in range (20):
     mostrecenttweet = api.user_timeline()[i]
     current_tweet_to_compare = (mostrecenttweet.text)
-    #if the proposed new status equals any of the previous tweets - exit program
-    if current_tweet_to_compare == status_update: #compares last tweets to current tweet to send out
+    # if the proposed new status equals any of the previous tweets - exit program
+    if current_tweet_to_compare == status_update: # compares last tweets to current tweet to send out
         print ("This update was already sent out...exiting script")
         exit()
 
-#update status
+# update status
 api.update_status(status=status_update)
+print ("Twitter status updated...exiting script")
+alert.close
+exit()
+
+# posts alert to twitter - if there are any active alerts
+
+# ---------------------------------------------------------------------------------------
+# anything under this line is test code
 
 
-#close url
-f.close()
-
-
-#posts alert to twitter - if there are any active alerts
-
-#---------------------------------------------------------------------------------------
-#anything under this line is test code
-
-
-#this test shows that the number in the middle brackets corresponds to the alerts
-#so if there is more than 1 alert, this mumber can be used to iterate through them
+# this test shows that the number in the middle brackets corresponds to the alerts
+# so if there is more than 1 alert, this mumber can be used to iterate through them
 # iterationtest = parsed_alert_json['alerts'][1]['type']
 # print ("This is looking for the third alert, which has the type of %s" % (iterationtest))
 
-#try not needed - block above can check for number of active alerts.
+# try not needed - block above can check for number of active alerts.
 # try:
 #     alert_type = parsed_alert_json['alerts'][0]['type']
 #     alert_description = parsed_alert_json['alerts'][0]['description']
@@ -96,11 +94,11 @@ f.close()
 
 
 
-    #update status test
+# update status test
 # status = current_weather
 # api.update_status(status=status)
 
-#prints out all tweets from timeline
+# prints out all tweets from timeline
 # public_tweets = api.home_timeline()
 # for tweet in public_tweets:
 #     print(tweet.text)
@@ -114,3 +112,4 @@ f.close()
 # temp_f = parsed_json['current_observation']['temp_f']
 # current_weather = ("Current temperature in %s is: %s" % (location, temp_f))
 # print (current_weather)
+# f.close
