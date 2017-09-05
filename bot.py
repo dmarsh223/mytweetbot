@@ -2,6 +2,7 @@ import tweepy
 import json
 from urllib.request import urlopen
 from datetime import datetime
+import os.path
 
 from secrets import *
 
@@ -28,7 +29,7 @@ currentdatetime = datetime.now()
 
 # if there are no alerts - the program exits
 if number_of_alerts == 0:
-    f = open('weatherlogs.txt','a')
+    f = open('E:\logs\weatherlogs.txt','a')
     f.write('\n%s - there are no active alerts' % (currentdatetime) )
     f.close()
     print("There are no active alerts - exiting script now")
@@ -61,7 +62,7 @@ for i in range (20):
     current_tweet_to_compare = (mostrecenttweet.text)
     # if the proposed new status equals any of the previous tweets - exit program
     if current_tweet_to_compare == status_update: # compares last tweets to current tweet to send out
-        f = open('weatherlogs.txt', 'a')
+        f = open('E:\logs\weatherlogs.txt', 'a')
         f.write('\n%s - duplicate alert found - no tweet sent out' % (currentdatetime))
         f.close()
         print ("This update was already sent out...exiting script")
@@ -69,7 +70,7 @@ for i in range (20):
 
 # update status
 api.update_status(status=status_update)
-f = open('weatherlogs.txt', 'a')
+f = open('E:\logs\weatherlogs.txt','a')
 f.write('\n%s - twitter status updated to %s' % (currentdatetime, status_update))
 f.close()
 print ("Twitter status updated...exiting script")
