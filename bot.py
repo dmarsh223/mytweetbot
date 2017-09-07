@@ -45,7 +45,8 @@ for i in range(number_of_alerts):
 
 
 # this is the status update that will be compared to previous tweets and eventually tweeted
-status_update = ("%s for Stafford Township expiring %s" % (alert_description_list[0], alert_end_time[0]))
+status_update = ("%s for Stafford Township expiring %s. Visit https://goo.gl/XwzVTp for"
+                 " details." % (alert_description_list[0], alert_end_time[0]))
 
 
 # accounting for multiple alerts - this is in progress
