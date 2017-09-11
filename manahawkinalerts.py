@@ -2,7 +2,6 @@ import tweepy
 import json
 from urllib.request import urlopen
 from datetime import datetime
-import os.path
 
 from secrets import *
 
@@ -14,7 +13,7 @@ api = tweepy.API(auth)
 
 
 #checks for weather alerts
-alert = urlopen(WUNDERGROUND_ALERTS)
+alert = urlopen(ALERT_MANAHAWKIN)
 alert_string = alert.read()
 parsed_alert_json = json.loads(alert_string)
 
