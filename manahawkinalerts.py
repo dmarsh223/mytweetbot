@@ -2,9 +2,10 @@ import tweepy
 import json
 from urllib.request import urlopen
 from datetime import datetime
-
 from secrets import *
 
+# set variable for date and time for logs
+currentdatetime = datetime.now()
 
 #authenticate to twitter
 auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
@@ -17,18 +18,18 @@ alert = urlopen(ALERT_MANAHAWKIN)
 alert_string = alert.read()
 parsed_alert_json = json.loads(alert_string)
 
+# print out full json dump for validation testing
+print (parsed_alert_json)
 
 #this obtains the number of active weather alerts and stores is in number_of_alerts
 item_dict = json.loads(alert_string)
 number_of_alerts = len(item_dict['alerts'])
 print ('The number of active weather alerts is %s' % (number_of_alerts))
 
-# set variable for date and time for logs
-currentdatetime = datetime.now()
 
 # if there are no alerts - the program exits
 if number_of_alerts == 0:
-    f = open('E:\logs\weatherlogs.txt','a')
+    f = open('E:\logs\manahawkinweatherlogs.txt','a')
     f.write('\n%s - there are no active alerts' % (currentdatetime) )
     f.close()
     print("There are no active alerts - exiting script now")
@@ -62,7 +63,7 @@ for i in range (20):
     current_tweet_to_compare = (mostrecenttweet.text)
     # if the proposed new status equals any of the previous tweets - exit program
     if current_tweet_to_compare == status_update: # compares last tweets to current tweet to send out
-        f = open('E:\logs\weatherlogs.txt', 'a')
+        f = open('E:\logs\manahawkinweatherlogs.txt', 'a')
         f.write('\n%s - duplicate alert found - no tweet sent out' % (currentdatetime))
         f.close()
         print ("This update was already sent out...exiting script")
@@ -70,7 +71,7 @@ for i in range (20):
 
 # update status
 api.update_status(status=status_update)
-f = open('E:\logs\weatherlogs.txt','a')
+f = open('E:\logs\manahawkinweatherlogs.txt','a')
 f.write('\n%s - twitter status updated to %s' % (currentdatetime, status_update))
 f.close()
 print ("Twitter status updated...exiting script")
