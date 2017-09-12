@@ -56,6 +56,7 @@ status_update = ("%s for Stafford Township expiring %s. Visit https://t.co/8jGoS
 
 print (status_update)
 
+
 # read in last 20 tweets and compare to a string to see if tweet has been posted already
 for i in range (20):
     mostrecenttweet = api.user_timeline()[i]

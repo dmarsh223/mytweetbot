@@ -78,6 +78,7 @@ print ("Twitter status updated...exiting script")
 alert.close
 exit()
 
+
 # posts alert to twitter - if there are any active alerts
 
 # ---------------------------------------------------------------------------------------
