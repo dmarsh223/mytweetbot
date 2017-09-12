@@ -41,7 +41,7 @@ alert_description_list = []
 alert_end_time = []
 for i in range(number_of_alerts):
     alert_description_list.append(parsed_alert_json['alerts'][i]['description'])
-    alert_end_time.append(parsed_alert_json['alerts'][i]['date'])
+    alert_end_time.append(parsed_alert_json['alerts'][i]['expires'])
 
 
 # this is the status update that will be compared to previous tweets and eventually tweeted
