@@ -43,7 +43,7 @@ for i in range(number_of_alerts):
 
 
 # this is the status update that will be compared to previous tweets and eventually tweeted
-status_update = ("%s for Stafford Township expiring %s. Visit https://goo.gl/XwzVTp for"
+status_update = ("%s for Stafford Township expiring %s. Visit https://t.co/8jGoSkI7GG for"
                  " details." % (alert_description_list[0], alert_end_time[0]))
 
 
@@ -54,11 +54,14 @@ status_update = ("%s for Stafford Township expiring %s. Visit https://goo.gl/Xwz
 #     status_update = ("%s for Stafford Township expiring %s" % (alert_description_list[0], alert_end_time[0]))
 # print (status_update)
 
+print (status_update)
 
 # read in last 20 tweets and compare to a string to see if tweet has been posted already
 for i in range (20):
     mostrecenttweet = api.user_timeline()[i]
     current_tweet_to_compare = (mostrecenttweet.text)
+    print(current_tweet_to_compare)
+
     # if the proposed new status equals any of the previous tweets - exit program
     if current_tweet_to_compare == status_update: # compares last tweets to current tweet to send out
         f = open('E:\logs\havenwestweatherlogs.txt', 'a')
