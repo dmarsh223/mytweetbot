@@ -1,9 +1,16 @@
 from urllib.request import urlopen
+import tweepy
 from bs4 import BeautifulSoup
 from datetime import datetime
+from secrets import *
 
 # set variable for date and time for logs
 currentdatetime = datetime.now()
+
+#authenticate to twitter
+auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
+auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
+api = tweepy.API(auth)
 
 # test URL
 # page = urlopen("https://alerts.weather.gov/cap/wwaatmget.php?x=MSZ067&y=0")
