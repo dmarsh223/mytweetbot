@@ -13,7 +13,7 @@ auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
 api = tweepy.API(auth)
 
 # test URL
-# page = urlopen("https://alerts.weather.gov/cap/wwaatmget.php?x=MSZ067&y=0")
+# page = urlopen("https://alerts.weather.gov/cap/wwaatmget.php?x=COC013&y=0")
 
 # correct URL
 page = urlopen("https://alerts.weather.gov/cap/wwaatmget.php?x=NJZ026&y=0l")
@@ -23,8 +23,9 @@ print (soup.prettify())
 
 # checks for active alerts and ends program if there are no active alerts
 firstTitleTag, secondTitleTag = soup.findAll("title")
-titleCompare = secondTitleTag.string
-if titleCompare == "There are no active watches, warnings or advisories":
+secondTitle = secondTitleTag.string
+
+if secondTitle == "There are no active watches, warnings or advisories":
     f = open('E:\logs\coastalnwsweatherlogs.txt', 'a')
     f.write('\n%s - No active alerts' % (currentdatetime))
     f.close()
@@ -36,6 +37,7 @@ if titleCompare == "There are no active watches, warnings or advisories":
 
 firstIDTag, secondIDTag = soup.findAll('id')
 uniqueID =  secondIDTag.string
+
 print (uniqueID)
 
 if uniqueID in open('E:\logs\coastalnwsweatherlogs.txt').read():
@@ -49,14 +51,13 @@ if uniqueID in open('E:\logs\coastalnwsweatherlogs.txt').read():
 # log file and continues on
 
 # need to create string of weather from this
-# *
-# *
-# *
 else:
     f = open('E:\logs\coastalnwsweatherlogs.txt', 'a')
-    f.write('\n%s - New alert found at' % (currentdatetime))
+    f.write('\n%s - New alert found: %s' % (currentdatetime, secondTitle))
     f.write ("\n%s" % (uniqueID))
     print ("New alert found - written to log")
+    status_update = ("Coastal Weather Alert: %s" % (secondTitle))
+    api.update_status(status=status_update)
     f.close()
 
 
