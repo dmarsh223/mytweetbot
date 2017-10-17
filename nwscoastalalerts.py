@@ -13,10 +13,10 @@ auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
 api = tweepy.API(auth)
 
 # test URL
-# page = urlopen("https://alerts.weather.gov/cap/wwaatmget.php?x=COC013&y=0")
+# page = urlopen("https://alerts.weather.gov/cap/wwaatmget.php?x=CAZ041&y=0")
 
 # correct URL
-page = urlopen("https://alerts.weather.gov/cap/wwaatmget.php?x=NJZ026&y=0l")
+page = urlopen("https://alerts.weather.gov/cap/wwaatmget.php?x=NJZ026&y=0")
 
 soup = BeautifulSoup(page, "lxml")
 print (soup.prettify())
