@@ -21,9 +21,14 @@ page = urlopen("https://alerts.weather.gov/cap/wwaatmget.php?x=NJZ020&y=0")
 soup = BeautifulSoup(page, "lxml")
 print (soup.prettify())
 
+# creates a list of the alert titles from the xml page
+alert_descripton_list = []
+for tag in soup.findAll('title'):
+    alert_descripton_list.append(str((tag.contents)))
+
 # checks for active alerts and ends program if there are no active alerts
-firstTitleTag, secondTitleTag = soup.findAll("title")
-secondTitle = secondTitleTag.string
+secondTitle = alert_descripton_list[1].strip("[]'")
+print (secondTitle)
 
 if secondTitle == "There are no active watches, warnings or advisories":
     f = open('E:\logs\staffordnwsweatherlogs.txt', 'a')
@@ -34,10 +39,13 @@ if secondTitle == "There are no active watches, warnings or advisories":
 
 # checks log file for current id from XML. If ID is present the program exits
 # if ID is not present, it is written to the file and the program continues
+id_descripton_list = []
+for tag in soup.findAll('id'):
+    id_descripton_list.append(str((tag.contents)))
 
-firstIDTag, secondIDTag = soup.findAll('id')
-uniqueID =  secondIDTag.string
+uniqueID = id_descripton_list[1]
 
+# test print
 print (uniqueID)
 
 if uniqueID in open('E:\logs\staffordnwsweatherlogs.txt').read():
@@ -50,7 +58,6 @@ if uniqueID in open('E:\logs\staffordnwsweatherlogs.txt').read():
 # if the alert id is not found in the log file this adds the id to the
 # log file and continues on
 
-# need to create string of weather from this
 else:
     f = open('E:\logs\staffordnwsweatherlogs.txt', 'a')
     f.write('\n%s - New alert found: %s' % (currentdatetime, secondTitle))
