@@ -66,8 +66,3 @@ else:
     status_update = ("Stafford Weather Alert: %s" % (secondTitle))
     api.update_status(status=status_update)
     f.close()
-
-
-
-
-
