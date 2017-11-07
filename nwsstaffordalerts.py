@@ -63,6 +63,6 @@ else:
     f.write('\n%s - New alert found: %s' % (currentdatetime, secondTitle))
     f.write ("\n%s" % (uniqueID))
     print ("New alert found - written to log")
-    status_update = ("Stafford Weather Alert: %s" % (secondTitle))
+    status_update = ("Stafford Weather Alert: %s. Visit https://goo.gl/pAkZqg for more information." % (secondTitle))
     api.update_status(status=status_update)
     f.close()
