@@ -12,8 +12,8 @@ auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
 auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
 api = tweepy.API(auth)
 
-# test URL
-# page = urlopen("https://alerts.weather.gov/cap/wwaatmget.php?x=COC013&y=0")
+# test URL - uncomment next line to test
+# page = urlopen("https://alerts.weather.gov/cap/wwaatmget.php?x=NJZ007&y=0")
 
 # correct URL
 page = urlopen("https://alerts.weather.gov/cap/wwaatmget.php?x=NJZ020&y=0")
