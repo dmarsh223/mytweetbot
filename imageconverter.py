@@ -2,12 +2,13 @@ from PIL import Image
 from PIL import ImageFont
 from PIL import ImageDraw
 
-img = Image.open("sample_in.jpg")
+img = Image.open("blank_slate.jpg")
 draw = ImageDraw.Draw(img)
 # font = ImageFont.truetype(<font-file>, <font-size>)
-font = ImageFont.truetype("sans-serif.ttf", 16)
+font = ImageFont.truetype("arial.ttf", 48)
 # draw.text((x, y),"Sample Text",(r,g,b))
-draw.text((0, 0),"Sample Text",(255,255,255),font=font)
+#try to keep limit to 40 characters per line
+draw.text((0, 50),"12345678901234567890123456789012345678901234567890",(0,0,0),font=font)
 img.save('sample-out.jpg')
 
 
