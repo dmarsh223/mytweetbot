@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 from datetime import datetime
 from secrets import *
 
+
 # set variable for date and time for logs
 currentdatetime = datetime.now()
 

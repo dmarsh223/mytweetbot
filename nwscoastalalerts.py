@@ -3,6 +3,7 @@ import tweepy
 from bs4 import BeautifulSoup
 from datetime import datetime
 from secrets import *
+from imageconverter import *
 
 # set variable for date and time for logs
 currentdatetime = datetime.now()
